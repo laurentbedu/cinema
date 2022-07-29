@@ -1,6 +1,6 @@
 import { DataManager } from "./helpers/dataManager.helper.js";
 import { Film } from "./models/film.model.js";
-import { Reservation } from "./models/reservations.model.js";
+import { Reservation } from "./models/reservation.model.js";
 import { Salle } from "./models/salle.model.js";
 import { Seance } from "./models/seance.model.js";
 
@@ -23,4 +23,19 @@ const dm = new DataManager(["film","reservation","salle","seance"]);
 // const seance1 = new Seance(seanceJsonObj);
 // console.log(seance1);
 
-console.log(dm);
+const films = dm.getAll("film");
+const reservations = dm.getAll("reservation");
+const salles = dm.getAll("salle");
+const seances = dm.getAll("seance");
+
+console.log(films);
+console.log(reservations);
+console.log(salles);
+console.log(seances);
+
+
+const film1 = dm.getOne("film", 1);
+const film10 = dm.getOne("film", 10);
+
+console.log(film1);
+console.log(film10);

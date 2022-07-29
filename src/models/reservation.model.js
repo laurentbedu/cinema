@@ -6,7 +6,6 @@ export class Reservation extends BaseModel{
     nbPlace = 0;
     seance_id = -1;
 
-
     constructor(jsonObj){
         super();
         this.assign(jsonObj);
