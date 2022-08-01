@@ -1,3 +1,3 @@
 # cinema
 
-Structure du projet avec les données au format json.
+Classe de type modèle avec classe de base.
