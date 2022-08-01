@@ -1,8 +1,4 @@
 import * as Models from "../models/index";
-// import { Film } from "../models/film.model";
-// import { Reservation } from "../models/reservation.model";
-// import { Salle } from "../models/salle.model";
-// import { Seance } from "../models/seance.model";
 
 export class DataManager {
   folder = "data";
@@ -39,19 +35,11 @@ export class DataManager {
   getAll = (tableName) => {
     const allData = JSON.parse(localStorage.getItem("data-cinema"));
     const jsonTableData = allData[tableName];
-    // const modelTableData = jsonTableData.map((row) => {
-    //   switch (tableName) {
-    //     case "film":
-    //       return new Film(row);
-    //     case "reservation":
-    //       return new Reservation(row);
-    //     case "salle":
-    //       return new Salle(row);
-    //     case "seance":
-    //       return new Seance(row);
-    //   }
-    // });
-    // return modelTableData;
+    const modelName = tableName.charAt(0).toUpperCase() + tableName.slice(1);
+    const ModelClass = Models[modelName];
+    return jsonTableData.map((row) => {
+      return new ModelClass(row);
+    });
   };
 
   getOne = (tableName, id) => {
@@ -63,22 +51,8 @@ export class DataManager {
     }
     const modelName = tableName.charAt(0).toUpperCase() + tableName.slice(1);
     const ModelClass = Models[modelName];
-    const modelObj = new ModelClass(jsonRow);
-    return modelObj;
-    // switch (tableName) {
-    //     case "film":
-    //         return new Film(jsonRow);
-    //     case "reservation":
-    //         return new Reservation(jsonRow);
-    //     case "salle":
-    //         return new Salle(jsonRow);
-    //     case "seance":
-    //         return new Seance(jsonRow);
-    // }
+    return new ModelClass(jsonRow);
   };
 
-  // Models;
-  // const modelName = tableName.charAt(0).toUpperCase() + tableName.slice(1);
-  // const modelClass = Models[modelName];
-  // const obj = new modelClass();
+
 }
