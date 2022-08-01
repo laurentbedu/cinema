@@ -1,3 +1,3 @@
 # cinema
 
-Classe DataManager, avec getAll et getOne en utilisant l'import "dynamique".
+Classe DataManager complétée avec insert, update et delete.

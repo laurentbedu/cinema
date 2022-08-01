@@ -32,27 +32,61 @@ export class DataManager {
     return jsonDataArray;
   };
 
-  getAll = (tableName) => {
+  getJsonDataTable = (tableName) => {
     const allData = JSON.parse(localStorage.getItem("data-cinema"));
-    const jsonTableData = allData[tableName];
+    return allData[tableName];
+  }
+
+  getModelClass = (tableName) => {
     const modelName = tableName.charAt(0).toUpperCase() + tableName.slice(1);
-    const ModelClass = Models[modelName];
-    return jsonTableData.map((row) => {
-      return new ModelClass(row);
+    return Models[modelName];
+  }
+
+  getAll = (tableName, withDeleted = false) => {
+    return this.getJsonDataTable(tableName).map((row) => {
+      return new (this.getModelClass(tableName))(row);
     });
   };
 
-  getOne = (tableName, id) => {
-    const allData = JSON.parse(localStorage.getItem("data-cinema"));
-    const jsonTableData = allData[tableName];
-    const jsonRow = jsonTableData.find((item) => item.id == id);
-    if(!jsonRow){ // jsonRow == undefined
-        return undefined;
-    }
-    const modelName = tableName.charAt(0).toUpperCase() + tableName.slice(1);
-    const ModelClass = Models[modelName];
-    return new ModelClass(jsonRow);
+  getOne = (tableName, id, withDeleted = false) => {
+    const jsonRow = this.getJsonDataTable(tableName).find((item) => item.id == id);
+    return jsonRow ? new (this.getModelClass(tableName))(jsonRow) : undefined;
   };
 
+  insertOne = (model) => {
+    const tableName = model.constructor.name.toLowerCase();
+    const allData = JSON.parse(localStorage.getItem("data-cinema"));
+    const jsonDataTable = allData[tableName];
+    const nextId = Math.max(...jsonDataTable.map((obj) => obj.id)) + 1;
+    model.id = nextId;
+    jsonDataTable.push(model);
+    localStorage.setItem('data-cinema', JSON.stringify(allData));
+  }
+
+  insertMany = (modelsArray) => {
+
+  }
+
+  updateOne = (model) => {
+    const tableName = model.constructor.name.toLowerCase();
+    const allData = JSON.parse(localStorage.getItem("data-cinema"));
+    const jsonDataTable = allData[tableName];
+    let row = jsonDataTable?.find((item) => item.id == model.id);
+    Object.assign(row, model);
+    localStorage.setItem('data-cinema', JSON.stringify(allData));
+  }
+
+  updateMany = (modelsArray) => {
+    
+  }
+
+  deleteOne = (model) => {
+    model.isDeleted = true;
+    this.updateOne(model);
+  }
+
+  deleteMany = (modelsArray, hard = false) => {
+
+  }
 
 }

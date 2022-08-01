@@ -23,19 +23,27 @@ const dm = new DataManager(["film","reservation","salle","seance"]);
 // const seance1 = new Seance(seanceJsonObj);
 // console.log(seance1);
 
-const films = dm.getAll("film");
-const reservations = dm.getAll("reservation");
-const salles = dm.getAll("salle");
-const seances = dm.getAll("seance");
+// const films = dm.getAll("film");
+// const reservations = dm.getAll("reservation");
+// const salles = dm.getAll("salle");
+// const seances = dm.getAll("seance");
 
-console.log(films);
-console.log(reservations);
-console.log(salles);
-console.log(seances);
+// console.log(films);
+// console.log(reservations);
+// console.log(salles);
+// console.log(seances);
 
 
 const film1 = dm.getOne("film", 1);
-const film10 = dm.getOne("film", 10);
+// film1.title = "nouveau titre";
+// dm.updateOne(film1);
 
-console.log(film1);
-console.log(film10);
+dm.deleteOne(film1);
+// const film10 = dm.getOne("film", 10);
+
+// console.log(film1);
+// console.log(film10);
+
+// const newFilm = new Film({title:"Avenger's 6", synopsis:"description résumé", affiche:'https://picsum.photos/id/1006/400/600'})
+// dm.insertOne(newFilm);
+
