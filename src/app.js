@@ -1,4 +1,4 @@
-
+import * as Controllers from "./controllers/index";
 
 export class App {
 
@@ -39,9 +39,16 @@ export class App {
 
     static navigateToRoute = async (route) => { //permet d'afficher le contenu de la page demandée
         console.log("navigateToRoute", route);
-        
-
-
+        const routeItems = route.replace(/^\//, "").replace(/\/$/, "").split('/');//Je supprime les éventuels / au début et à la fin de la route et je la découpe pour obtenir un tableau
+        const controllerName = routeItems?.shift() || "home"; //Je récupère la première partie de la route qui correspond au nom du controlleur
+        const controllerKey = controllerName.charAt(0).toUpperCase() + controllerName.slice(1) + "Controller";
+        let Controller = Controllers[controllerKey];
+        if(!Controller){
+            Controller = Controllers['ErrorController'];
+        }
+        let controllerInstance = new Controller();
+        const html = controllerInstance.index();
+        document.getElementById('root').innerHTML = html;
         //initialisation de l'événement click sur les liens de la page (une fois le contenu modifié)
         for(const link of App.spaLinks){
             link.onclick = (evt) => {
