@@ -1,4 +1,4 @@
 # cinema
 
-Modification de la classe static App + ajout des controllers de l'application
+Ajout de la vue error (appelée par le controller error)
 

@@ -3,8 +3,10 @@
 
 export class ErrorController {
 
-    index = () => {
-        return "Erreur 404, cette page n'existe pas !";
+    index = async () => {
+        const {ErrorIndexView} = await import('../views/error/error.index.view');
+        const view = new ErrorIndexView();
+        return view.render();
     }
 
 }

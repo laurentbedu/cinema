@@ -47,7 +47,7 @@ export class App {
             Controller = Controllers['ErrorController'];
         }
         let controllerInstance = new Controller();
-        const html = controllerInstance.index();
+        const html = await controllerInstance.index();
         document.getElementById('root').innerHTML = html;
         //initialisation de l'événement click sur les liens de la page (une fois le contenu modifié)
         for(const link of App.spaLinks){
