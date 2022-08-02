@@ -1,3 +1,4 @@
+import { DataManager } from "../helpers/dataManager.helper";
 import { BaseModel } from "./baseModel.model";
 
 export class Reservation extends BaseModel{
@@ -9,5 +10,10 @@ export class Reservation extends BaseModel{
     constructor(jsonObj){
         super();
         this.assign(jsonObj);
+    }
+
+    getSeance(){
+        const seance = DataManager.getOne("seance", this.seance_id);
+        return seance;
     }
 }

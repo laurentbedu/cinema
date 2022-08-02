@@ -1,3 +1,4 @@
+import { DataManager } from "../helpers/dataManager.helper";
 import { BaseModel } from "./baseModel.model";
 
 export class Seance extends BaseModel{
@@ -11,5 +12,20 @@ export class Seance extends BaseModel{
     constructor(jsonObj){
         super();
         this.assign(jsonObj);
+    }
+
+    getFilm(){
+        const film = DataManager.getOne("film", this.film_id);
+        return film;
+    }
+
+    getSalle(){
+        const salle = DataManager.getOne("salle", this.salle_id);
+        return salle;
+    }
+
+    getReservationList(){
+        const reservationList = DataManager.getAll("reservation").filter(reservation => reservation.seance_id == this.id);
+        return reservationList;
     }
 }

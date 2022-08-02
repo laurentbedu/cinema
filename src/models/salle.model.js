@@ -1,3 +1,4 @@
+import { DataManager } from "../helpers/dataManager.helper";
 import { BaseModel } from "./baseModel.model";
 
 export class Salle extends BaseModel{
@@ -8,5 +9,10 @@ export class Salle extends BaseModel{
     constructor(jsonObj){
         super();
         this.assign(jsonObj);
+    }
+
+    getSeanceList(){
+        const seanceList = DataManager.getAll("seance").filter(seance => seance.salle_id == this.id);
+        return seanceList;
     }
 } 

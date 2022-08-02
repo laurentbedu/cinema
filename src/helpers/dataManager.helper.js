@@ -1,76 +1,73 @@
 import * as Models from "../models/index";
 
 export class DataManager {
-  folder = "data";
-  files = [];
+  
+  static folder = "data";
+  static files = [];
 
-  constructor(files, folder = "data") {
-    this.files = files;
-    this.folder = folder;
-  }
-
-  initDataStorage = async () => {
+  static initDataStorage = async (folder = "data") => {
+    for(const modelName in Models){
+      DataManager.files.push(modelName.toLowerCase());
+    }
+    DataManager.folder = folder;
     const dataStorage = {};
-    for (const file of this.files) {
-      dataStorage[file] = await this.readJsonFile(file);
+    for (const file of DataManager.files) {
+      dataStorage[file] = await DataManager.readJsonFile(file);
     }
     localStorage.setItem("data-cinema", JSON.stringify(dataStorage));
   };
 
-  readJsonFile = async (fileName) => {
+  static readJsonFile = async (fileName) => {
     let jsonDataArray = [];
-
-    await fetch(`./src/${this.folder}/${fileName}.json`)
+    await fetch(`./src/${DataManager.folder}/${fileName}.json`)
       .then((resp) => {
-        console.log(resp);
         return resp.text();
       })
       .then((text) => {
         jsonDataArray = JSON.parse(text);
       });
-
     return jsonDataArray;
   };
 
-  getJsonDataTable = (tableName) => {
+  static getJsonDataTable = (tableName) => {
     const allData = JSON.parse(localStorage.getItem("data-cinema"));
     return allData[tableName];
   };
 
-  getModelClass = (tableName) => {
+  static getModelClass = (tableName) => {
     const modelName = tableName.charAt(0).toUpperCase() + tableName.slice(1);
     return Models[modelName];
   };
 
-  getAll = (tableName, withDeletedRows = false) => {
-    let jsonDataTable = this.getJsonDataTable(tableName);
+  static getAll = (tableName, withDeletedRows = false) => {
+    let jsonDataTable = DataManager.getJsonDataTable(tableName);
     if(!withDeletedRows){
       jsonDataTable = jsonDataTable.filter(item => !item.isDeleted)
     }
     return jsonDataTable.map((row) => {
-        return new (this.getModelClass(tableName))(row);
+        return new (DataManager.getModelClass(tableName))(row);
     });
   };
 
-  getOne = (tableName, id, whereIsDeleted = false) => {
-    const jsonRow = this.getJsonDataTable(tableName).find((item) => item.id == id);
+  static getOne = (tableName, id, whereIsDeleted = false) => {
+    const jsonRow = DataManager.getJsonDataTable(tableName).find((item) => item.id == id);
     if(!jsonRow || !whereIsDeleted && jsonRow.isDeleted){
       return;
     }
-    return new (this.getModelClass(tableName))(jsonRow);
+    return new (DataManager.getModelClass(tableName))(jsonRow);
   };
 
-  insertOne = (model) => {
-    const tableName = model.constructor.name.toLowerCase();
-    const allData = JSON.parse(localStorage.getItem("data-cinema"));
-    const jsonDataTable = allData[tableName];
-    const nextId = Math.max(...jsonDataTable.map((obj) => obj.id)) + 1;
-    model.id = nextId;
-    jsonDataTable.push(model);
-    localStorage.setItem('data-cinema', JSON.stringify(allData));
-  };
+  // insertOne = (model) => {
+  //   const tableName = model.constructor.name.toLowerCase();
+  //   const allData = JSON.parse(localStorage.getItem("data-cinema"));
+  //   const jsonDataTable = allData[tableName];
+  //   const nextId = Math.max(...jsonDataTable.map((obj) => obj.id)) + 1;
+  //   model.id = nextId;
+  //   jsonDataTable.push(model);
+  //   localStorage.setItem('data-cinema', JSON.stringify(allData));
+  // };
 
-  insertMany = (...modelsArray) => {
+  static insert = (...modelsArray) => {
     const tableName = modelsArray[0]?.constructor.name.toLowerCase();
     const allData = JSON.parse(localStorage.getItem("data-cinema"));
     const jsonDataTable = allData[tableName];
@@ -82,16 +79,16 @@ export class DataManager {
     localStorage.setItem('data-cinema', JSON.stringify(allData));
   };
 
-  updateOne = (model) => {
-    const tableName = model.constructor.name.toLowerCase();
-    const allData = JSON.parse(localStorage.getItem("data-cinema"));
-    const jsonDataTable = allData[tableName];
-    let row = jsonDataTable?.find((item) => item.id == model.id);
-    Object.assign(row, model);
-    localStorage.setItem('data-cinema', JSON.stringify(allData));
-  };
+  // updateOne = (model) => {
+  //   const tableName = model.constructor.name.toLowerCase();
+  //   const allData = JSON.parse(localStorage.getItem("data-cinema"));
+  //   const jsonDataTable = allData[tableName];
+  //   let row = jsonDataTable?.find((item) => item.id == model.id);
+  //   Object.assign(row, model);
+  //   localStorage.setItem('data-cinema', JSON.stringify(allData));
+  // };
 
-  updateMany = (...modelsArray) => {
+  static update = (...modelsArray) => {
     const tableName = modelsArray[0]?.constructor.name.toLowerCase();
     const allData = JSON.parse(localStorage.getItem("data-cinema"));
     const jsonDataTable = allData[tableName];
@@ -102,16 +99,16 @@ export class DataManager {
     localStorage.setItem('data-cinema', JSON.stringify(allData));
   };
 
-  deleteOne = (model) => {
-    model.isDeleted = true;
-    this.updateOne(model);
-  };
+  // deleteOne = (model) => {
+  //   model.isDeleted = true;
+  //   DataManager.updateOne(model);
+  // };
 
-  deleteMany = (...modelsArray) => {
+  static delete = (...modelsArray) => {
     for(const model of modelsArray){
       model.isDeleted = true;
     }
-    this.updateMany(...modelsArray)
+    DataManager.update(...modelsArray)
   };
 
 }

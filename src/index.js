@@ -4,8 +4,11 @@ import { Reservation } from "./models/reservation.model.js";
 import { Salle } from "./models/salle.model.js";
 import { Seance } from "./models/seance.model.js";
 
-const dm = new DataManager(["film","reservation","salle","seance"]);
-// dm.initDataStorage();
+// const dm = new DataManager();
+DataManager.initDataStorage();
+const folder = DataManager.folder;
+const files = DataManager.files;
+console.log();
 
 // const filmJsonObj = {"id":1,"title":"Avenger's 1","synopsis":"Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, quibusdam quisquam. Quasi blanditiis quam laborum est quae facere a. Enim fuga qui, distinctio deserunt molestias consequatur necessitatibus nesciunt repudiandae fugiat!","affiche":"https://picsum.photos/id/1001/400/600"};
 // const film1 = new Film(filmJsonObj);
@@ -53,5 +56,5 @@ const dm = new DataManager(["film","reservation","salle","seance"]);
 // const filmB = new Film({title:"Avenger's 6", synopsis:"description résumé", affiche:'https://picsum.photos/id/1006/400/600'});
 // dm.insertMany(filmA, filmB);
 
-dm.updateMany(film1,film2, film3, film4);
+// dm.updateMany(film1,film2, film3, film4);
 // dm.deleteMany(film1, film2);
