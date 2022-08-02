@@ -23,21 +23,21 @@ const dm = new DataManager(["film","reservation","salle","seance"]);
 // const seance1 = new Seance(seanceJsonObj);
 // console.log(seance1);
 
-const films = dm.getAll("film", true);
+// const films = dm.getAll("film", true);
 // const reservations = dm.getAll("reservation");
 // const salles = dm.getAll("salle");
 // const seances = dm.getAll("seance");
 
-console.log(films);
+// console.log(films);
 // console.log(reservations);
 // console.log(salles);
 // console.log(seances);
 
 
-const film1 = dm.getOne("film", 4, true);
-const film2 = dm.getOne("film", 5, true);
-film1.title = "nouveau titre";
-film2.title = "nouveau titre";
+// const film1 = dm.getOne("film", 4, true);
+// const film2 = dm.getOne("film", 5, true);
+// film1.title = "nouveau titre";
+// film2.title = "nouveau titre";
 // dm.updateOne(film1);
 
 // dm.deleteOne(film1);
@@ -53,5 +53,5 @@ film2.title = "nouveau titre";
 // const filmB = new Film({title:"Avenger's 6", synopsis:"description résumé", affiche:'https://picsum.photos/id/1006/400/600'});
 // dm.insertMany(filmA, filmB);
 
-dm.updateMany(film1,film2);
-dm.deleteMany(film1, film2);
+dm.updateMany(film1,film2, film3, film4);
+// dm.deleteMany(film1, film2);
