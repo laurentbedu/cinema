@@ -1,4 +1,4 @@
 # cinema
 
-Ajout de la vue error (appelée par le controller error)
+Ajout de la vue filmDetail (appelée par le controller filmDetail)
 
