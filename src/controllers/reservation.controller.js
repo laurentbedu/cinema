@@ -4,7 +4,7 @@
 export class ReservationController {
 
     index = () => {
-        return "Page de réservation";
+        return "<h1>Page de réservation</h1>";
     }
 
 }
