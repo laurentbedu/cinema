@@ -25,7 +25,7 @@ export class FilmDetailIndexView {
 
     const { film, seances } = this.models;
     const sortedSeances = seances.sort((s1,s2) => s1.heure < s2.heure ? -1 : 1)
-                                .sort((s1,s2) => s1.jour < s2.jour ? -1 : 1)
+                                .sort((s1,s2) => s1.jour < s2.jour ? -1 : 1);
     const seanceLinks = sortedSeances.map(seance => {
       return `
         <a href="/reservation/${seance.id}" class="btn btn-primary spa-link m-1">
