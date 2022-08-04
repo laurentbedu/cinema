@@ -4,7 +4,7 @@ import { BaseModel } from "./baseModel.model";
 export class Reservation extends BaseModel{
 
     customer = "";
-    nbPlace = 0;
+    nbPlace = 1;
     seance_id = -1;
 
     constructor(jsonObj){

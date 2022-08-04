@@ -72,6 +72,7 @@ export class DataManager {
     const allData = JSON.parse(localStorage.getItem("data-cinema"));
     const jsonDataTable = allData[tableName];
     let nextId = Math.max(...jsonDataTable.map((obj) => obj.id)) + 1;
+    if(nextId < 0) nextId = 1; //Utile pour la première ligne insérée dans la table
     for(const model of modelsArray){
       model.id = nextId++;
       jsonDataTable.push(model);
