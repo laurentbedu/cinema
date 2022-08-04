@@ -1,4 +1,4 @@
 # cinema
 
-Amélioration de la vue filmDetail (appelée par le controller filmDetail) avec la liste des reservations
+Ajout de la vue reservation (appelée par le controller reservation) + sauvegarde de la sésa en DB
 
